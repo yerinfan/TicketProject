@@ -2,119 +2,170 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.ac.kopo.dao.BoardDAO"> 
+<mapper namespace="kr.ac.kopo.dao.BoardDAO">
 
 	<resultMap type="boardVO" id="boardMap">
 		<result column="reg_date" property="regDate" />
 		<result column="view_cnt" property="viewCnt" />
 	</resultMap>
-  
+
 	<sql id="selectBoard">
 		select board_no, title, writer
- 		     , to_char(reg_date, 'yyyy-mm-dd') as regDate
- 		  from rs_board
-	</sql>  
-  
- 	<!-- 전체게시글조회 sql -->
- 	<select id="selectAll" resultType="boardVO">
- 		select board_no, title, writer
- 		     , to_char(reg_date, 'yyyy-mm-dd') as regDate
- 		  from rs_board
- 		 order by reg_date desc
- 	</select>
- 	 ="boardVO" parameterType="int">
- 		select board_no, title, writer
- 		     , to_char(reg_date, 'yyyy-mm-dd') as regDate
- 		  from rs_board
- 		 where board_no = #{no}
- 	</select>
- 	
- 	<select id="selectByNo2" resultType="boardVO" parameterType="boardVO">
- 		 <include refid="selectBoard" />
- 		 where board_no = #{no}
- 	</select>
- 	
- 	<select id="selectByNo3" parameterType="boardVO" resultMap="boardMap">
- 		select *
- 		  from rs_board
- 		 where board_no = #{no}
- 	</select>
- 	
- 	<!-- 게시글 삽입 sql  -->
- 	<insert id="insert" parameterType="boardVO">
- 		insert into rs_board(board_no, title, writer, content)
- 		 values(seq_rs_board_no.nextVal, #{title}, #{writer}, #{content})
- 	</insert>
- 	
- 	<select id="selectWhere" parameterType="boardVO" resultType="boardVO">
- 	  <include refid="selectBoard" />
- 	  where 
- 	  	<if test="title != null">
- 	  		title = #{title}
- 	  		<if test="writer != null">
- 	  			and
- 	  		</if>
- 	  	</if>
- 	  	
- 	  	<if test="writer != null"> 
- 	  		writer = #{writer}
- 	  	</if>
- 		
- 	</select>
- 	
- 	<select id="selectWhere2" parameterType="boardVO" resultType="boardVO">
- 		<include refid="selectBoard" />
- 		<where>
- 			<if test="title != null">
- 				title = #{title}
- 			</if>
- 			<if test="writer != null">
- 				and writer = #{writer}
- 			</if>
- 		</where>
- 	</select>
- 	
- 	<select id="selectWhere3"  resultType="boardVO">
- 		<include refid="selectBoard" />
- 		<!-- where title like '${title}%' -->
- 		where title like #{title}||'%'
- 	</select>
- 	
- 	<select id="selectNos" parameterType="boardVO" resultType="boardVO">
- 		<include refid="selectBoard"/>
- 		where board_no in 
- 			<foreach collection="nos" item="bno" separator="," open="(" close=")">
- 				#{bno}
- 			</foreach>
- 		
- 	</select>
- 	
- 	<select id="selectNos2" resultType="boardVO" parameterType="int[]">
- 		<include refid="selectBoard"/>
- 		where board_no in
- 			<foreach collection="array" item="bno" separator="," open="(" close=")">
- 				#{bno}
- 			</foreach>
- 	</select>
- 	
- 	<select id="selectNos3" resultType="boardVO" parameterType="int[]">
- 		<include refid="selectBoard"/>
- 		where board_no in
- 			<foreach collection="array" index="index" separator="," open="(" close=")">
- 				${array[index]}
- 			</foreach>
- 	</select>
- 	
- 	<select id="selectMap" resultType="boardVO" parameterType="map">
- 		<include refid="selectBoard" />
- 		where title = #{title} 
- 		  and content = #{content}
- 	</select>
- 	
- 	<select id="selectMap2" parameterType="int" resultType="map">
- 		<include refid="selectBoard" />
- 		where board_no = #{no}
- 	</select>
+		, to_char(reg_date, 'yyyy-mm-dd') as regDate
+		from rs_board
+	</sql>
+	
+	<!-- 전체 게시글 조회 -->
+	<select id="selectAll" resultType="kr.ac.kopo.vo.BoardVO">
+		SELECT board_no AS no,    <!-- 게시글 번호 매핑 -->
+		title,
+		writer,
+		content,
+		TO_CHAR(reg_date, 'YYYY-MM-DD') AS regDate,
+		view_cnt AS viewCnt
+		FROM rs_board
+	</select>
+
+	<!-- 게시글 상세 조회 -->
+	<select id="selectByNo" parameterType="int" resultType="kr.ac.kopo.vo.BoardVO">
+	    SELECT board_no AS no,
+	           title,
+	           writer,
+	           content,
+	           TO_CHAR(reg_date, 'YYYY-MM-DD') AS regDate,
+	           view_cnt AS viewCnt,
+	           whose_no AS whoseNo
+	    FROM rs_board
+	    WHERE board_no = #{no}
+	</select>
+
+	<select id="selectByNo2" resultType="boardVO"
+		parameterType="boardVO">
+		<include refid="selectBoard" />
+		where board_no = #{no}
+	</select>
+
+	<select id="selectByNo3" parameterType="boardVO"
+		resultMap="boardMap">
+		select *
+		from rs_board
+		where board_no = #{no}
+	</select>
+
+	<!-- 게시글 등록 -->
+	<insert id="insertBoard" parameterType="kr.ac.kopo.vo.BoardVO">
+		INSERT INTO rs_board (
+		board_no, title, writer, content, reg_date, view_cnt
+		) VALUES (
+		seq_rs_board_no.NEXTVAL, #{title}, #{writer}, #{content}, SYSDATE, 0
+		)
+	</insert>
+
+	<!-- 게시글 삽입 sql -->
+	<insert id="insert" parameterType="boardVO">
+		insert into rs_board(board_no, title, writer, content)
+		values(seq_rs_board_no.nextVal, #{title}, #{writer}, #{content})
+	</insert>
+
+	<select id="selectWhere" parameterType="boardVO"
+		resultType="boardVO">
+		<include refid="selectBoard" />
+		where
+		<if test="title != null">
+			title = #{title}
+			<if test="writer != null">
+				and
+			</if>
+		</if>
+
+		<if test="writer != null">
+			writer = #{writer}
+		</if>
+
+	</select>
+
+	<select id="selectWhere2" parameterType="boardVO"
+		resultType="boardVO">
+		<include refid="selectBoard" />
+		<where>
+			<if test="title != null">
+				title = #{title}
+			</if>
+			<if test="writer != null">
+				and writer = #{writer}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectWhere3" resultType="boardVO">
+		<include refid="selectBoard" />
+		<!-- where title like '${title}%' -->
+		where title like #{title}||'%'
+	</select>
+
+	<select id="selectNos" parameterType="boardVO"
+		resultType="boardVO">
+		<include refid="selectBoard" />
+		where board_no in
+		<foreach collection="nos" item="bno" separator="," open="("
+			close=")">
+			#{bno}
+		</foreach>
+
+	</select>
+
+	<select id="selectNos2" resultType="boardVO"
+		parameterType="int[]">
+		<include refid="selectBoard" />
+		where board_no in
+		<foreach collection="array" item="bno" separator="," open="("
+			close=")">
+			#{bno}
+		</foreach>
+	</select>
+
+	<select id="selectNos3" resultType="boardVO"
+		parameterType="int[]">
+		<include refid="selectBoard" />
+		where board_no in
+		<foreach collection="array" index="index" separator=","
+			open="(" close=")">
+			${array[index]}
+		</foreach>
+	</select>
+
+	<select id="selectMap" resultType="boardVO" parameterType="map">
+		<include refid="selectBoard" />
+		where title = #{title}
+		and content = #{content}
+	</select>
+
+	<select id="selectMap2" parameterType="int" resultType="map">
+		<include refid="selectBoard" />
+		where board_no = #{no}
+	</select>
+
+	<!-- 수정 -->
+	<update id="updateBoard" parameterType="kr.ac.kopo.vo.BoardVO">
+		UPDATE rs_board
+		SET title = #{title},
+		content = #{content}
+		WHERE board_no = #{no}
+	</update>
+
+	<!-- 삭제 -->
+	<delete id="deleteBoard" parameterType="int">
+		DELETE FROM rs_board
+		WHERE board_no = #{no}
+	</delete>
+
+	<!-- 답글 -->
+	<insert id="insertReply" parameterType="kr.ac.kopo.vo.BoardVO">
+		INSERT INTO rs_board (board_no, title, content, writer, reg_date, view_cnt,
+		whose_no)
+		VALUES (seq_rs_board_no.NEXTVAL, #{title}, #{content}, #{writer}, SYSDATE,
+		0, #{whoseNo})
+	</insert>
 </mapper>
 
 

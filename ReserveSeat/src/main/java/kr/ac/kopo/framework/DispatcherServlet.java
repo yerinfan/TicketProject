@@ -8,8 +8,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import kr.ac.kopo.controller.BoardListController;
-import kr.ac.kopo.controller.BoardWriteFormController;
 import kr.ac.kopo.controller.Controller;
 
 //@WebServlet
@@ -23,7 +21,7 @@ public class DispatcherServlet extends HttpServlet {
 		System.out.println(propName);
 		mappings = new HandlerMapping(propName);
 	}
-
+	
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -34,10 +32,21 @@ public class DispatcherServlet extends HttpServlet {
 		
 		try {
 			Controller control = mappings.getController(uri);
-			String callPage = control.handleRequest(request, response);
-			RequestDispatcher dispatcher = request.getRequestDispatcher(callPage);
-			dispatcher.forward(request, response);
-			
+			 if (control == null) {
+		            throw new ServletException("매핑된 컨트롤러가 없습니다: " + uri);
+		        }
+		        // 컨트롤러 실행 및 결과 페이지 반환
+		        String view = control.handleRequest(request, response);
+
+		        // 리다이렉트 처리
+		        if (view.startsWith("redirect:")) {
+		            String redirectUrl = view.substring("redirect:".length());
+		            response.sendRedirect(contextPath + redirectUrl);
+		        } else {
+		            // 포워딩 처리
+		            RequestDispatcher dispatcher = request.getRequestDispatcher(view);
+		            dispatcher.forward(request, response);
+		        }
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new ServletException();

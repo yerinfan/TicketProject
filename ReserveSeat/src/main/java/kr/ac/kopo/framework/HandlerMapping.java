@@ -16,14 +16,19 @@ public class HandlerMapping {
 	
 	/*
 	 * public HandlerMapping() { this("bean.properties"); }
+	 * /ReserveSeat/src/main/java/kr/ac/kopo/framework/bean.properties
 	 */
 	
 	public HandlerMapping(String propName) {
+//		System.out.println("1");
 		if(propName == null) propName = "bean.properties";
+//		System.out.println("2");
 		mappings = new HashMap<>();
+//		System.out.println("3");
 		Properties prop = new Properties();
+//		System.out.println("4");
 		String propLoc = this.getClass().getResource("bean.properties").getPath();
-		//System.out.println(propLoc);
+		System.out.println(propLoc);
 		
 		try (
 			InputStream is = new FileInputStream(propLoc);

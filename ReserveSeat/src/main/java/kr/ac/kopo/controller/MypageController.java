@@ -8,7 +8,7 @@ public class MypageController implements Controller {
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
-		return "ticket/member/myPage.jsp";
+		return "/ticket/member/myPage.jsp";
 	}
 
 }
