@@ -27,8 +27,8 @@
 		<welcome-file>default.htm</welcome-file>
 	</welcome-file-list>
 
-	<jsp-config>
+	<!-- <jsp-config>
 		<el-ignored>false</el-ignored>
 	</jsp-config>
-
+ -->
 </web-app>

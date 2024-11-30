@@ -19,7 +19,11 @@
     <select id="checkLogin" parameterType="map" resultType="int">
         SELECT COUNT(*)
         FROM rs_member
-        WHERE user_id = #{userId}
+        WHERE user_id = CAST(#{userId} AS VARCHAR2(100))
           AND password = #{password}
     </select>
+    <insert id="insertMember" parameterType="kr.ac.kopo.vo.MemberVO">
+        INSERT INTO rs_member (user_id, name, password, nickname, reg_date)
+        VALUES (#{userId}, #{name}, #{password}, #{nickname}, SYSDATE)
+    </insert>
 </mapper>

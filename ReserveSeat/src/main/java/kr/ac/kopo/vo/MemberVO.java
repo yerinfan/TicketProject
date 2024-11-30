@@ -1,35 +1,47 @@
 package kr.ac.kopo.vo;
 
 public class MemberVO {
-	private int userID;
+	private String userId;
 	private String name;
 	private String password;
 	private String nickname;
 	private String regDate;
 	
-	public MemberVO(int userID, String user, String password, String nickname, String regDate) {
+	public MemberVO() {
 		super();
-		this.userID = userID;
-		this.name = user;
+	}
+
+	public MemberVO(String userID, String name, String password, String nickname) {
+		super();
+		this.userId = userID;
+		this.name = name;
+		this.password = password;
+		this.nickname = nickname;
+	}
+	
+	public MemberVO(String userID, String name, String password, String nickname, String regDate) {
+		super();
+		this.userId = userID;
+		this.name = name;
 		this.password = password;
 		this.nickname = nickname;
 		this.regDate = regDate;
 	}
 
-	public int getUserID() {
-		return userID;
+	public String getUserID() {
+		return userId;
 	}
 
-	public void setUserID(int userID) {
-		this.userID = userID;
+	public void setUserID(String userID) {
+		this.userId = userID;
 	}
 
-	public String getUser() {
+	public String getName() {
 		return name;
 	}
 
-	public void setUser(String user) {
-		this.name = user;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getPassword() {

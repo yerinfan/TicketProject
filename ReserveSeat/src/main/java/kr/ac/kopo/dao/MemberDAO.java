@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 
 import kr.ac.kopo.mybatis.MyConfig;
 import kr.ac.kopo.util.MyBatisConnectionFactory;
+import kr.ac.kopo.vo.MemberVO;
 
 public class MemberDAO {
 	private SqlSession session;
@@ -33,7 +34,10 @@ public class MemberDAO {
 		try {
 			session = sqlSessionFactory.openSession();
 			int count = session.selectOne("member.checkLogin", paramMap);
+			System.out.println(paramMap);
+			System.out.println(count);
 			isValidUser = count > 0; // count가 1 이상이면 유효한 사용자
+			System.out.println("멤버 다오 속 :" + isValidUser);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -42,5 +46,10 @@ public class MemberDAO {
 		}
 
 		return isValidUser;
+	}
+
+	public void insertMember(MemberVO member) throws Exception {
+        session.insert("member.insertMember", member);
+        session.commit();
 	}
 }

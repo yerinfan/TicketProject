@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import kr.ac.kopo.dao.MemberDAO;
+import kr.ac.kopo.vo.MemberVO;
 
 public class MemberService {
 
@@ -26,6 +27,18 @@ public class MemberService {
 		paramMap.put("userId", userId);
 		paramMap.put("password", password);
 
-		return memberDAO.checkLogin(paramMap);
+		boolean ans = memberDAO.checkLogin(paramMap);
+		System.out.println("멤버 서비스의 값:" + ans);
+		return ans;
+	}
+
+	public boolean registerMember(MemberVO member) {
+		  try {
+	            memberDAO.insertMember(member);
+	            return true;
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return false;
+	        }
 	}
 }

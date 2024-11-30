@@ -3,10 +3,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <title>예약 완료</title>
 </head>
 <body>
-	<h1>예약 성공 페이지</h1>
+    <h2>예약이 완료되었습니다.</h2>
+    <p>강의실: ${classNo}</p>
+    <p>좌석: ${seatNo}</p>
+    <p>예약자: ${user}</p>
+    <a href="/ReserveSeat/index.jsp">홈으로</a>
 </body>
 </html>

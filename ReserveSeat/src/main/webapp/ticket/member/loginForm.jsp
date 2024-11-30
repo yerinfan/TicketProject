@@ -11,14 +11,15 @@
     <form action="/ReserveSeat/login.do" method="post">
         <label for="userId">아이디:</label>
         <input type="text" name="userId" id="userId" required />
-        <br />
+        <br>
         <label for="password">비밀번호:</label>
         <input type="password" name="password" id="password" required />
-        <br />
+        <br>
         <button type="submit">로그인</button>
     </form>
-    <p style="color: red;">
+ 	<a href="/ReserveSeat/regist.do">회원 등록<br></a>
+<%--     <p style="color: red;">
         <%= request.getAttribute("errorMsg") == null ? "" : request.getAttribute("errorMsg") %>
-    </p>
+    </p> --%>
 </body>
 </html>	
