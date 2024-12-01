@@ -1,0 +1,110 @@
+/* 전체 화면 스타일 */
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+
+/* 로그인 컨테이너 */
+.login-container {
+    background-color: white;
+    padding: 30px 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 300px; /* 전체 너비를 고정 */
+    box-sizing: border-box; /* 내부 패딩 포함 */
+}
+
+/* 제목 */
+h1 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* 입력 그룹 */
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #0044cc;
+}
+
+/* 로그인 버튼 */
+.login-button {
+    background-color: #0044cc;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%; /* 컨테이너에 맞춤 */
+    margin-top: 10px;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box; /* 내부 패딩 포함 */
+}
+
+.login-button:hover {
+    background-color: #003399;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* 구글 로그인 컨테이너 */
+.google-login {
+    margin-bottom: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.google-login div.g_id_signin {
+    display: inline-block;
+    width: 100%; /* 구글 로그인 버튼 폭 맞춤 */
+}
+
+/* 회원 등록 버튼 */
+.register-button {
+    display: block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    font-size: 1rem;
+    color: white;
+    background-color: #28a745;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%; /* 컨테이너 폭에 맞춤 */
+    text-align: center;
+    box-sizing: border-box; /* 내부 패딩 포함 */
+}
+
+.register-button:hover {
+    background-color: #218838;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}

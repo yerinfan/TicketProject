@@ -1,0 +1,72 @@
+/* 헤더 스타일 */
+header {
+    background-color: #0044cc; /* 메인 색상 */
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 내비게이션 스타일 */
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 0 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+nav ul li {
+    display: inline-block;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
+    padding: 10px 20px; /* 크기 통일 */
+    border-radius: 5px;
+    background-color: #87CEEB; /* 하늘색 버튼 */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+nav ul li a:hover {
+    background-color: #00BFFF; /* hover 시 더 짙은 하늘색 */
+    color: white;
+}
+
+/* 사용자 정보 섹션 */
+.user-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    color: white;
+}
+
+.user-name {
+    font-weight: bold;
+}
+
+/* 로그아웃 버튼 */
+.logout-btn {
+    background-color: #87CEEB; /* 하늘색 버튼 */
+    color: white;
+    border: none;
+    padding: 10px 20px; /* 크기 통일 */
+    font-size: 1.2rem; /* 다른 버튼과 동일한 폰트 크기 */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.logout-btn:hover {
+    background-color: #00BFFF; /* hover 시 더 짙은 하늘색 */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+	

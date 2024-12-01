@@ -29,6 +29,12 @@
                 </td>
             </tr>
             <tr>
+                <th>이메일</th>
+                <td>
+                    <input type="email" name="email" required />
+                </td>
+            </tr>
+            <tr>
                 <th>닉네임</th>
                 <td>
                     <input type="text" name="nickname" required />

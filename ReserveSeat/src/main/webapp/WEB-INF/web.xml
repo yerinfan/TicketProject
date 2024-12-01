@@ -2,9 +2,10 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="https://jakarta.ee/xml/ns/jakartaee"
 	xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
-	id="WebApp_ID" version="6.0">
+	version="6.0">
 	<display-name>ReserveSeat</display-name>
 
+	<!-- Dispatcher Servlet 설정 -->
 	<servlet>
 		<servlet-name>dispatcher</servlet-name>
 		<servlet-class>kr.ac.kopo.framework.DispatcherServlet</servlet-class>
@@ -18,6 +19,18 @@
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
 
+	<!-- OAuthCallback 서블릿 설정 -->
+	<servlet>
+		<servlet-name>RegisterCallback</servlet-name>
+		<servlet-class>kr.ac.kopo.framework.RegisterCallbackServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RegisterCallback</servlet-name>
+		<url-pattern>/register.do</url-pattern>
+	</servlet-mapping>
+
+
+	<!-- Welcome 파일 리스트 -->
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.jsp</welcome-file>
@@ -27,8 +40,6 @@
 		<welcome-file>default.htm</welcome-file>
 	</welcome-file-list>
 
-	<!-- <jsp-config>
-		<el-ignored>false</el-ignored>
-	</jsp-config>
- -->
+	<!-- JSP EL 처리 (필요 시 활성화) -->
+	<!-- <jsp-config> <el-ignored>false</el-ignored> </jsp-config> -->
 </web-app>

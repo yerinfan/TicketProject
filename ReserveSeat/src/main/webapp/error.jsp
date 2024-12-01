@@ -3,11 +3,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>예약 완료</title>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/ReserveSeat/style.css">
 </head>
 <body>
-	<h1>${message}</h1>
-
-    <a href="/ReserveSeat/index.jsp">홈으로</a>
+	<h1>에러</h1>
 </body>
 </html>

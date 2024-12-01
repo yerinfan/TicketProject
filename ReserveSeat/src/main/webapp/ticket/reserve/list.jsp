@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,8 +9,8 @@
     <form action="/ReserveSeat/reserve/detail.do" method="get">
         <label>
             시간 선택:
-            <input type="radio" name="time" value="morning" required> 오전
-            <input type="radio" name="time" value="afternoon"> 오후
+            <input type="radio" name="regTime" value="AM" required> 오전
+            <input type="radio" name="regTime" value="PM"> 오후
         </label>
         <br><br>
         <label>

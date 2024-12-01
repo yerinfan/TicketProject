@@ -23,7 +23,7 @@
             <tr>
                 <th>작성자</th>
                 <td>
-                    <input type="text" name="writer" placeholder="작성자명" required />
+                    <input type="text" name="writer" value ="${sessionScope.user.name}"readonly ></p>
                 </td>
             </tr>
             <tr>

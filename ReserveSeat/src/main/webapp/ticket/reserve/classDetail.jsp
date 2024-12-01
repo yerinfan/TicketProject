@@ -1,34 +1,32 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List" %>
+<%@ page import="kr.ac.kopo.vo.ClassVO" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>좌석 선택</title>
-    <style>
-        .seat { width: 30px; height: 30px; text-align: center; }
-        .empty { background-color: green; color: white; }
-        .reserved { background-color: red; color: white; }
-    </style>
+    <title>강의실 상세</title>
 </head>
 <body>
-    <h2>좌석 선택</h2>
-    <form action="/ReserveSeat/reserve/reserv.do" method="post">
-        <table border="1">
-            <c:forEach var="row" begin="1" end="${seatRow}">
+    <h2>강의실 상세 정보</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>좌석 번호</th>
+                <th>행</th>
+                <th>열</th>
+                <th>상태</th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:forEach var="seat" items="${seatList}">
                 <tr>
-                    <c:forEach var="col" begin="1" end="${seatCol}">
-                        <td class="seat ${seatStatus[row-1][col-1] == 'Y' ? 'empty' : 'reserved'}">
-                            <input type="radio" name="seatNo" value="${row}-${col}" ${seatStatus[row-1][col-1] == 'N' ? 'disabled' : ''}>
-                            ${row}-${col}
-                        </td>
-                    </c:forEach>
+                    <td>${seat.seatNo}</td>
+                    <td>${seat.seatRow}</td>
+                    <td>${seat.seatCol}</td>
+                    <td>${seat.isEmpty}</td>
                 </tr>
             </c:forEach>
-        </table>
-        <input type="hidden" name="classNo" value="${classNo}">
-        <input type="hidden" name="time" value="${time}">
-        <br>
-        <button type="submit">예약</button>
-    </form>
+        </tbody>
+    </table>
 </body>
 </html>
