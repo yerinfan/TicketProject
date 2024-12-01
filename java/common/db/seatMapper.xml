@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Seat">
+
+    <!-- 특정 좌석 정보 가져오기 -->
+    <select id="selectSeat" parameterType="map" resultType="kr.ac.kopo.vo.SeatVO">
+        SELECT seat_key AS seatKey, is_empty AS isEmpty
+        FROM rs_class
+        WHERE seat_key = #{seatKey} 
+        AND class_no = #{classNo} 
+        AND reg_time = #{regTime}
+    </select>
+
+    <!-- 좌석 상태 업데이트 -->
+    <update id="updateSeat" parameterType="string">
+        UPDATE rs_class
+        SET is_empty = 'N'
+        WHERE seat_key = #{seatKey} AND is_empty = 'Y'
+    </update>
+
+</mapper>

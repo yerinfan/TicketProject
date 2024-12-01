@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+
+    <!-- 사용자 조회 -->
+    <select id="getUser" parameterType="map" resultType="kr.ac.kopo.vo.MemberVO">
+        SELECT user_id AS userID,
+               name,
+               password,
+               nickname,
+               TO_CHAR(reg_date, 'YYYY-MM-DD') AS regDate
+        FROM rs_member
+        WHERE user_id = #{userId} AND password = #{password}
+    </select>
+
+    <!-- 로그인 체크 -->
+    <select id="checkLogin" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM rs_member
+        WHERE user_id = #{userId, jdbcType=VARCHAR}
+          AND password = #{password, jdbcType=VARCHAR}
+    </select>
+
+    <!-- Google ID로 사용자 조회 -->
+    <select id="findByGoogleId" parameterType="string" resultType="kr.ac.kopo.vo.MemberVO">
+        SELECT user_id AS userID,
+               name,
+               email,
+               nickname
+        FROM rs_member
+        WHERE user_id = #{userId}
+    </select>
+
+    <!-- 사용자 정보 조회 -->
+    <select id="findMemberByCredentials" parameterType="map" resultType="kr.ac.kopo.vo.MemberVO">
+        SELECT user_id AS userId,
+               name,
+               password,
+               email,
+               nickname
+        FROM rs_member
+        WHERE user_id = #{userId} AND password = #{password}
+    </select>
+
+    <!-- 회원가입 -->
+    <insert id="insertMember" parameterType="kr.ac.kopo.vo.MemberVO">
+        INSERT INTO rs_member (user_id, name, email, nickname, reg_date)
+        VALUES (#{userID}, #{name}, #{email}, #{nickname}, SYSDATE)
+    </insert>
+
+</mapper>
