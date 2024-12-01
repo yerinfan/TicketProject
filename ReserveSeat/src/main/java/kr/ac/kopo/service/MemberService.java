@@ -1,8 +1,5 @@
 package kr.ac.kopo.service;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import kr.ac.kopo.dao.MemberDAO;
 import kr.ac.kopo.vo.MemberVO;
 
@@ -22,16 +19,10 @@ public class MemberService {
 	 * @param password
 	 * @return boolean
 	 */
-	public boolean validateUser(String userId, String password) {
-		Map<String, String> paramMap = new HashMap<>();
-		paramMap.put("userId", userId);
-		paramMap.put("password", password);
-
-		boolean ans = memberDAO.checkLogin(paramMap);
-		System.out.println("멤버 서비스의 값:" + ans);
-		return ans;
+	public MemberVO validateUser(String userId, String password) {
+	    return memberDAO.findMemberByCredentials(userId, password); // 사용자 정보를 반환
 	}
-
+	
 	public boolean registerMember(MemberVO member) {
 		  try {
 	            memberDAO.insertMember(member);

@@ -19,11 +19,13 @@ public class RegistController implements Controller {
 	        String userIdParam = request.getParameter("user_id");
 	        String name = request.getParameter("name");
 	        String password = request.getParameter("password");
+	        String email = request.getParameter("email");
 	        String nickname = request.getParameter("nickname");
 //	        System.out.println("1");
 	        if (userIdParam == null || userIdParam.isEmpty() ||
 	            name == null || name.isEmpty() ||
 	            password == null || password.isEmpty() ||
+	            		email == null || email.isEmpty() ||
 	            nickname == null || nickname.isEmpty()) {
 	            request.setAttribute("message", "모든 필드를 입력해주세요.");
 	            return "/ticket/member/regist.jsp";
@@ -38,7 +40,7 @@ public class RegistController implements Controller {
 	            return "/ticket/member/regist.jsp";
 	        }
 //	        System.out.println("3");
-	        MemberVO member = new MemberVO(userId, name, password, nickname);
+	        MemberVO member = new MemberVO(userId, name, password, email, nickname);
 
 	        // DB에 회원 정보 저장
 //	        System.out.println("4");

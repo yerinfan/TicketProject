@@ -4,6 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="member">
+
     <!-- 사용자 조회 -->
     <select id="getUser" parameterType="map" resultType="kr.ac.kopo.vo.MemberVO">
         SELECT user_id AS userID,
@@ -19,11 +20,35 @@
     <select id="checkLogin" parameterType="map" resultType="int">
         SELECT COUNT(*)
         FROM rs_member
-        WHERE user_id = CAST(#{userId} AS VARCHAR2(100))
-          AND password = #{password}
+        WHERE user_id = #{userId, jdbcType=VARCHAR}
+          AND password = #{password, jdbcType=VARCHAR}
     </select>
+
+    <!-- Google ID로 사용자 조회 -->
+    <select id="findByGoogleId" parameterType="string" resultType="kr.ac.kopo.vo.MemberVO">
+        SELECT user_id AS userID,
+               name,
+               email,
+               nickname
+        FROM rs_member
+        WHERE user_id = #{userId}
+    </select>
+
+    <!-- 사용자 정보 조회 -->
+    <select id="findMemberByCredentials" parameterType="map" resultType="kr.ac.kopo.vo.MemberVO">
+        SELECT user_id AS userId,
+               name,
+               password,
+               email,
+               nickname
+        FROM rs_member
+        WHERE user_id = #{userId} AND password = #{password}
+    </select>
+
+    <!-- 회원가입 -->
     <insert id="insertMember" parameterType="kr.ac.kopo.vo.MemberVO">
-        INSERT INTO rs_member (user_id, name, password, nickname, reg_date)
-        VALUES (#{userId}, #{name}, #{password}, #{nickname}, SYSDATE)
+        INSERT INTO rs_member (user_id, name, email, nickname, reg_date)
+        VALUES (#{userID}, #{name}, #{email}, #{nickname}, SYSDATE)
     </insert>
+
 </mapper>

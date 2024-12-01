@@ -27,5 +27,7 @@
 	<mappers>
 		<mapper resource="common/db/memberMapper.xml" />
 		<mapper resource="common/db/boardMapper.xml" />
+		<mapper resource="common/db/classMapper.xml" />
+		<mapper resource="common/db/seatMapper.xml" />
 	</mappers>
 </configuration>
