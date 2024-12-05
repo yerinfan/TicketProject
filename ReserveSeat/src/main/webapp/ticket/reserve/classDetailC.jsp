@@ -44,7 +44,7 @@ td {
 </head>
 
 <body>
-	<h2 style="text-align: center;">강의실 A 좌석 현황</h2>
+	<h2 style="text-align: center;">ai 제어 실습실 좌석 현황</h2>
 	<table>
 		<c:forEach var="row" begin="1" end="8">
 			<tr>

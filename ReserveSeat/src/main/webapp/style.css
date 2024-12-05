@@ -1,10 +1,18 @@
+/* 전체 페이지 스타일 */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7fc; /* 배경색 */
+}
+
 /* 헤더 스타일 */
 header {
     background-color: #0044cc; /* 메인 색상 */
     color: white;
     padding: 20px 0;
     text-align: center;
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: bold;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
@@ -13,7 +21,7 @@ header {
 nav ul {
     list-style: none;
     padding: 0;
-    margin: 20px 0 0 0;
+    margin: 20px 0;
     display: flex;
     justify-content: center;
     gap: 20px;
@@ -69,4 +77,37 @@ nav ul li a:hover {
     background-color: #00BFFF; /* hover 시 더 짙은 하늘색 */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
-	
+
+/* 컨테이너 스타일 */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* 화면 전체 높이 */
+    padding: 20px;
+}
+
+/* 위치 섹션 스타일 */
+#section-3 {
+    text-align: center;
+    margin-top: 50px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    max-width: 800px;
+}
+
+#map {
+    width: 100%;
+    height: 500px;
+    margin: 0 auto;
+    border-radius: 10px;
+}
+
+/* 코드 섹션 스타일 */
+#snippet {
+    display: none;
+}
