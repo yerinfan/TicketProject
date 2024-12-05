@@ -48,36 +48,47 @@ public class MemberDAO {
 		return isValidUser;
 	}
 
+    public MemberVO findByEmail(String email) {
+        return session.selectOne("member.findByEmail", email);
+    }
+	
 	public MemberVO findMemberByGoogleId(String userId) {
 		try (SqlSession session = sqlSessionFactory.openSession()) {
-	        return session.selectOne("member.findByGoogleId", userId);
-	    }
-	}
-	
-	public MemberVO findMemberByCredentials(String userId, String password) {
-	    MemberVO member = null;
-	    try (SqlSession session = sqlSessionFactory.openSession()) {
-	        member = session.selectOne("member.findMemberByCredentials", Map.of("userId", userId, "password", password));
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	    return member;
-	}
-	
-	public void insertMember(MemberVO member) throws Exception {
-        session.insert("member.insertMember", member);
-        session.commit();
-	}
-	
-	public boolean insertMember2(MemberVO member) {
-	    try (SqlSession session = sqlSessionFactory.openSession()) {
-	        int rows = session.insert("member.insertMember", member);
-	        session.commit();
-	        return rows > 0;
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return false;
-	    }
+			return session.selectOne("member.findByGoogleId", userId);
+		}
 	}
 
+    public MemberVO findMemberByCredentials(String userId, String password) {
+        MemberVO params = new MemberVO();
+        params.setUserId(userId);
+        params.setPassword(password);
+        return session.selectOne("member.findByCredentials", params);
+    }
+
+	public void insertMember(MemberVO member) throws Exception {
+		session.insert("member.insertMember", member);
+		session.commit();
+	}
+
+	public boolean insertMember2(MemberVO member) {
+		try (SqlSession session = sqlSessionFactory.openSession()) {
+			int rows = session.insert("member.insertMember", member);
+			session.commit();
+			return rows > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public MemberVO findMemberByEmail(String email) {
+		return session.selectOne("member.findByEmail", email);
+	}
+
+    public int updateMemberEmail(String userId, String email) {
+        MemberVO params = new MemberVO();
+        params.setUserId(userId);
+        params.setEmail(email);
+        return session.update("member.updateEmail", params);
+    }
 }

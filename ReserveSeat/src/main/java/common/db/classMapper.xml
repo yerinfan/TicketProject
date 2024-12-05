@@ -49,7 +49,8 @@
             seat_row AS seatRow,
             seat_col AS seatCol,
             is_empty AS isEmpty,
-            class_type AS classType
+            class_type AS classType,
+            reserved_by AS reservedBy 
         FROM rs_class
         WHERE reserved_by = #{userId, jdbcType=VARCHAR}
     </select>

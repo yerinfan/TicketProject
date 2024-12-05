@@ -8,7 +8,6 @@ public class MemberService {
 	private MemberDAO memberDAO;
 
 	public MemberService() {
-		System.out.println("MemberService 생성자 호출");
 		memberDAO = new MemberDAO();
 	}
 
@@ -20,16 +19,38 @@ public class MemberService {
 	 * @return boolean
 	 */
 	public MemberVO validateUser(String userId, String password) {
-	    return memberDAO.findMemberByCredentials(userId, password); // 사용자 정보를 반환
+		return memberDAO.findMemberByCredentials(userId, password); // 사용자 정보를 반환
 	}
+
+    public boolean isMember(String email) {
+        return memberDAO.findByEmail(email) != null;
+    }
 	
 	public boolean registerMember(MemberVO member) {
-		  try {
-	            memberDAO.insertMember(member);
-	            return true;
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	            return false;
-	        }
+		try {
+			memberDAO.insertMember(member);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	
+
+    public boolean isMemberByEmail(String email) {
+        return memberDAO.findByEmail(email) != null;
+    }
+    
+    public boolean linkAccount(String userId, String password, String email) {
+        MemberVO existingMember = memberDAO.findMemberByCredentials(userId, password);
+        if (existingMember != null) {
+            return memberDAO.updateMemberEmail(userId, email) > 0;
+        }
+        return false;
+    }
+
+	public MemberVO findByEmail(String email) {
+		return memberDAO.findByEmail(email);
 	}
 }

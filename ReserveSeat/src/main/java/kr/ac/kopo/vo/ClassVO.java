@@ -9,12 +9,21 @@ public class ClassVO {
     private int seatCol;       // 좌석 열
     private String isEmpty;    // 좌석 선점 여부 (Y/N)
     private String classType;  // 강의실 구조
-
+    private String reservedBy;
+    
     // 기본 생성자
     public ClassVO() {
     }
 
-    // 생성자
+    public String getReservedBy() {
+		return reservedBy;
+	}
+
+	public void setReservedBy(String reservedBy) {
+		this.reservedBy = reservedBy;
+	}
+
+	// 생성자
     public ClassVO(String classNo, String regTime) {
         this.classNo = classNo;
         this.regTime = regTime;

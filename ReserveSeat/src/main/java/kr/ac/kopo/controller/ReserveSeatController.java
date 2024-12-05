@@ -20,16 +20,22 @@ public class ReserveSeatController implements Controller {
         MemberVO user = (MemberVO) session.getAttribute("user"); // 세션에서 MemberVO 가져오기
         String userId = user.getUserId();
         
+        if (user == null) {
+            request.setAttribute("message", "로그인이 필요합니다.");
+            return "/ticket/member/loginForm.jsp";
+        }
+        
         ClassDAO classDAO = new ClassDAO();
         System.out.println("seatKey: " + seatKey);
         System.out.println("classNo: " + classNo);
         System.out.println("regTime: " + regTime);
-
         
-        ClassVO seat = classDAO.getSeat(seatKey, classNo, regTime);
+	    ClassVO seat = classDAO.getSeat(seatKey, classNo, regTime);
 
+        String identifier = userId != null ? userId : user.getEmail();
+        
         if (seat != null && "Y".equals(seat.getIsEmpty())) {
-            boolean success = classDAO.reserveSeat(seatKey, classNo, regTime, userId);
+            boolean success = classDAO.reserveSeat(seatKey, classNo, regTime, identifier);
             if (success) {
                 request.setAttribute("message", "좌석 예약 성공!");
             } else {

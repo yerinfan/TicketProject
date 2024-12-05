@@ -6,10 +6,10 @@ import jakarta.servlet.http.HttpSession;
 import kr.ac.kopo.service.MemberService;
 import kr.ac.kopo.vo.MemberVO;
 
-public class RegisterController implements Controller {
+public class CheckMemberController implements Controller {
     private MemberService memberService;
 
-    public RegisterController() {
+    public CheckMemberController() {
         memberService = new MemberService();
     }
 
@@ -18,18 +18,18 @@ public class RegisterController implements Controller {
         String email = request.getParameter("email");
         String nickname = request.getParameter("nickname");
 
-        MemberVO user = memberService.findByEmail(email);
+        MemberVO existingMember = memberService.findByEmail(email);
 
-        HttpSession session = request.getSession();
-        if (user != null) {
-            // 네이버 로그인 사용자 정보 세션에 저장
-            session.setAttribute("user", user);
-            return "/index.jsp"; // 메인 페이지로 이동
+        if (existingMember != null) {
+            // 이미 회원인 경우 로그인 처리
+            HttpSession session = request.getSession();
+            session.setAttribute("user", existingMember);
+            return "/ReserveSeat/index.jsp"; // 메인 페이지로 이동
         } else {
-            // 회원 가입 유도
+            // 회원이 아닌 경우 회원가입 페이지로 이동
             request.setAttribute("email", email);
             request.setAttribute("nickname", nickname);
-            return "/ticket/member/register.jsp"; // 회원 가입 페이지로 이동
+            return "/ReserveSeat/ticket/member/registerForm.jsp"; // 회원가입 페이지로 이동
         }
     }
 }

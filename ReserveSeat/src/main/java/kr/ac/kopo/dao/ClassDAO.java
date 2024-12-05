@@ -27,7 +27,7 @@ public class ClassDAO {
 		params.put("classNo", classNo);
 		params.put("regTime", regTime);
 
-//	    System.out.println("Fetching data with params: " + params);
+//	    System.out.println("Fetc	hing data with params: " + params);
 
 		List<ClassVO> result = session.selectList("class.getClassDetails", params);
 //	    System.out.println(result);
