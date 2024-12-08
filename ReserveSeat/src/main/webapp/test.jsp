@@ -1,78 +1,85 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>네이버 로그인 테스트</title>
-  
-</head>
-<body>
-<div id="naver_id_login"></div>
+<%@ page import="java.net.*"%>
+<%@ page import="java.io.*"%>
+<%@ page import="org.json.JSONObject"%>
+<%@ page import="kr.ac.kopo.service.MemberService"%>
+<%@ page import="kr.ac.kopo.vo.MemberVO"%>
+<%
+    String clientId = "B9AWK_9qoqbmaucJFSO1"; // 네이버 앱 Client ID
+    String clientSecret = "XKfbL3E8tR"; // 네이버 앱 Client Secret
+    String code = request.getParameter("code");
+    String state = request.getParameter("state");
+    String redirectURI = URLEncoder.encode("http://localhost:8080/ReserveSeat/test.jsp", "UTF-8");
 
-  <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-  <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-  
-<script>
-/* 02.10최종완료 - */
-/* 네이버 아이콘 클릭 시 콜백되는 화면, 해당 화면에서 ApiLoginController의 Naver메서드들과 데이터를 주고받으며 가입처리 및 로그인 처리 */
-	const naverLogin = new naver.LoginWithNaverId({
-		clientId: "내 클라이언트ID",
-		callbackUrl: "설정했던 콜백URL",
-		isPopup: false, /* 팝업을 통한 연동처리 여부 */
-	    callbackHandle: true
-	});
+    String apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code"
+        + "&client_id=" + clientId
+        + "&client_secret=" + clientSecret
+        + "&redirect_uri=" + redirectURI
+        + "&code=" + code
+        + "&state=" + state;
 
-	naverLogin.init();/* 설정정보를 초기화하고 연동을 준비 */
+    String accessToken = "";
+    try {
+        // Access Token 요청
+        URL url = new URL(apiURL);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
+        int responseCode = con.getResponseCode();
+        BufferedReader br = new BufferedReader(new InputStreamReader(
+            responseCode == 200 ? con.getInputStream() : con.getErrorStream()));
+        StringBuilder res = new StringBuilder();
+        String inputLine;
+        while ((inputLine = br.readLine()) != null) {
+            res.append(inputLine);
+        }
+        br.close();
 
-	window.addEventListener('load', function () {	
-		naverLogin.getLoginStatus(function(status) {
-			if (status) {
-				const email = naverLogin.user.getEmail();
-				const nickName = naverLogin.user.getNickName();
-				
-				console.log(naverLogin);
-				
-				$.ajax({
-					type : 'post',
-					url : 'naverSaved',
-					data : {"email" : email, "nickname" : nickName, "id" : id},
-					dataType : 'text',
-					success: function(result) {
-						/* success 1 : 가입해야 할 경우 */
-		                if(result=='ok') {
-		                    /* success 1-1 : 닉네임 입력받아 가입시키기 */
-   		                    /* 닉네임 입력 시 가입, 미입력 시 주소 리턴 */
-		                    var newNickname = prompt('사용하실 닉네임을 입력해주세요');
-		                    if(newNickname != null){ /* 입력 시 데이터 전송으로 자동로그인 처리 및 메인 페이지 이동 */
-			                    $.ajax({
-			    					type : 'post',
-			    					url : 'naverSignin',
-			    					data : {"email" : email, "nickname" : newNickname, "id" : id}
-			    				});			                    
-		                    	alert(newNickname + "님 환영합니다");
-			                    location.href = "/video/list";
-		                    }		                    
-		                    else { /* 가입 거절 시 로그인화면 리턴 */
-		                    	location.href = "/user/signin"
-		                    }
-		                    
-		    			/* success 2 : 기가입  */
-		                } else if(result != null) {
-		                    alert(result + "님 반갑습니다.")
-		                    location.href = "/video/list"
-		                }
-		            },
-		            error: function(result) {
-		                console.log('오류 발생')
-		            }
-				})
-		         
-			} else alert("콜백 실패");
-			
-		});
-	});
-</script>
+        if (responseCode == 200) {
+            JSONObject tokenResponse = new JSONObject(res.toString());
+            accessToken = tokenResponse.getString("access_token");
 
-</body>
-</html>
+            // 사용자 정보 요청
+            String userInfoURL = "https://openapi.naver.com/v1/nid/me";
+            URL userInfoEndpoint = new URL(userInfoURL);
+            HttpURLConnection userInfoCon = (HttpURLConnection) userInfoEndpoint.openConnection();
+            userInfoCon.setRequestMethod("GET");
+            userInfoCon.setRequestProperty("Authorization", "Bearer " + accessToken);
+            int userInfoResponseCode = userInfoCon.getResponseCode();
+
+            BufferedReader userInfoBr = new BufferedReader(new InputStreamReader(
+                userInfoResponseCode == 200 ? userInfoCon.getInputStream() : userInfoCon.getErrorStream()));
+            StringBuilder userInfoRes = new StringBuilder();
+            while ((inputLine = userInfoBr.readLine()) != null) {
+                userInfoRes.append(inputLine);
+            }
+            userInfoBr.close();
+
+            if (userInfoResponseCode == 200) {
+                JSONObject userInfoResponse = new JSONObject(userInfoRes.toString());
+                JSONObject userResponse = userInfoResponse.getJSONObject("response");
+                String email = userResponse.getString("email");
+                String nickname = userResponse.getString("nickname");
+
+                // DB 처리
+                MemberService memberService = new MemberService();
+                MemberVO member = memberService.findByEmail(email);
+
+                if (member != null) {
+                    // 회원이 존재하면 로그인 처리
+                    session.setAttribute("user", member);
+                    response.sendRedirect("/ReserveSeat/index.jsp");
+                } else {
+                    // 회원가입 진행
+                    request.setAttribute("email", email);
+      				request.setAttribute("nickname", nickname);
+      				request.getRequestDispatcher("/ReserveSeat/registerForm.jsp").forward(request, response);
+                    
+                }
+            }
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        response.sendRedirect("/ReserveSeat/error.jsp");
+    }
+%>

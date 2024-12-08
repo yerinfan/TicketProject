@@ -122,9 +122,9 @@ a {
 		</tr>
 	</table>
 
-
+	
 	<c:choose>
-		<c:when test="${board.writer == loggedInUserId}">
+		<c:when test="${board.writer eq sessionScope.user.nickname}">
 			<br>
 			<a href="/ReserveSeat/board/updateForm.do?no=${board.no}">
 				<button>수정</button>

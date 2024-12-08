@@ -112,7 +112,7 @@ a:hover {
             <tr>
                 <th>작성자</th>
                 <td>
-                    <input type="text" name="writer" value ="${sessionScope.user.name}"readonly ></p>
+                    <input type="text" name="writer" value ="${sessionScope.user.nickname}"readonly ></p>
                 </td>
             </tr>
             <tr>

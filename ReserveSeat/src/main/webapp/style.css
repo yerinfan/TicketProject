@@ -111,3 +111,10 @@ nav ul li a:hover {
 #snippet {
     display: none;
 }
+
+button[disabled] {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+    border: 1px solid #999;
+}

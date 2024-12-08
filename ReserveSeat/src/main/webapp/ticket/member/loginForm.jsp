@@ -131,6 +131,9 @@ a.home-link:hover {
 </style>
 <link rel="stylesheet" href="/ReserveSeat/ticket/member/style.css">
 </head>
+<%@ page import="java.net.URLEncoder" %>
+<%@ page import="java.security.SecureRandom" %>
+<%@ page import="java.math.BigInteger" %>
 <body>
 	<div class="login-container">
 		<h1>로그인</h1>
@@ -146,25 +149,20 @@ a.home-link:hover {
 			<button type="submit" class="login-button">로그인</button>
 		</form>
 
+  <%
+    String clientId = "B9AWK_9qoqbmaucJFSO1";//애플리케이션 클라이언트 아이디값";
+    String redirectURI = URLEncoder.encode("http://localhost:8080/ReserveSeat/test.jsp", "UTF-8");
+    SecureRandom random = new SecureRandom();
+    String state = new BigInteger(130, random).toString();
+    String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code"
+         + "&client_id=" + clientId
+         + "&redirect_uri=" + redirectURI
+         + "&state=" + state;
+    session.setAttribute("state", state);
+ %>
+  <a href="<%=apiURL%>"><img height="50" src="http://static.nid.naver.com/oauth/small_g_in.PNG"/></a>
 
-
-  <!-- 네이버 로그인 버튼 노출 영역 -->
-  <div id="naver_id_login"></div>
-  <!-- //네이버 로그인 버튼 노출 영역 -->
-  <script type="text/javascript">
-  	var naver_id_login = new naver_id_login("B9AWK_9qoqbmaucJFSO1", "http://localhost:8080/ReserveSeat/register.jsp");
-  	var state = naver_id_login.getUniqState();
-  	naver_id_login.setButton("white", 2,40);
-  	naver_id_login.setDomain("http://localhost:8080/ReserveSeat/ticket/member/loginForm.jsp");
-  	naver_id_login.setState(state);
-  	naver_id_login.setPopup(false);
-  	naver_id_login.init_naver_id_login();
-  </script>
-
- 		<a
-			href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=B9AWK_9qoqbmaucJFSO1&redirect_uri=http://localhost:8080/ReserveSeat/register.jsp&state=RANDOM_STATE">
-			<button>네이버 로그인</button>
-		</a>  <a href="/ReserveSeat/regist.do" class="register-button">회원 등록<br></a>
+  <a href="/ReserveSeat/regist.do" class="register-button">회원 등록<br></a>
 		<a href="/ReserveSeat/index.jsp" class="home-link">홈으로</a>
 	</div>
 </body>

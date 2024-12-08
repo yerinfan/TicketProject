@@ -131,7 +131,7 @@ a button:hover {
             <tr>
                 <th>이메일</th>
                 <td>
-                    <input type="email" name="email" required />
+                    <input type="email" name="email"/>
                 </td>
             </tr>
             <tr>
