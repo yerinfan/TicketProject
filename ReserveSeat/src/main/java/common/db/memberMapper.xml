@@ -59,7 +59,7 @@
 
 	<select id="findByEmail" parameterType="string"
 		resultType="kr.ac.kopo.vo.MemberVO">
-		SELECT user_id AS userId, name, password, email, nickname
+		SELECT user_id AS userId, name, password, email, reg_date as regDate, nickname
 		FROM rs_member
 		WHERE email = #{email}
 	</select>

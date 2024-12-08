@@ -20,7 +20,7 @@ public class MyConfig {
 			System.out.println("2");
 			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 			System.out.println("3");
-			session = sqlSessionFactory.openSession();
+			session = sqlSessionFactory.openSession(true);
 			System.out.println("4");
 		} catch (IOException e) {
 			e.printStackTrace();

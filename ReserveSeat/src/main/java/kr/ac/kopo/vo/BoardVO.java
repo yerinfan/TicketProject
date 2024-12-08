@@ -9,8 +9,21 @@ public class BoardVO {
     private String regDate;      // 작성일
     private int viewCnt;         // 조회수
     private int whoseNo;     // 부모 게시글 번호 (null 가능)
+    private int depth;
+    
+    public int getDepth() {
+		return depth;
+	}
 
-    // 기본 생성자
+	public void setDepth(int depth) {
+		this.depth = depth;
+	}
+
+	public void setWhoseNo(int whoseNo) {
+		this.whoseNo = whoseNo;
+	}
+
+	// 기본 생성자
     public BoardVO() {}
 
     // 생성자

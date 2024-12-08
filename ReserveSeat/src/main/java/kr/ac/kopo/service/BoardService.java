@@ -40,6 +40,6 @@ public class BoardService {
 
     // 답변 게시글 등록
     public void replyBoard(BoardVO replyBoard) throws Exception {
-        boardDao.insert(replyBoard); // 답변 글도 새 글로 등록
+        boardDao.insertReply(replyBoard); // 답변 글도 새 글로 등록
     }
 }

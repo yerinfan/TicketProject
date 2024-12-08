@@ -22,8 +22,12 @@
 		writer,
 		content,
 		TO_CHAR(reg_date, 'YYYY-MM-DD') AS regDate,
-		view_cnt AS viewCnt
+		view_cnt AS viewCnt,
+		LEVEL AS depth      -- 계층 깊이 추가
 		FROM rs_board
+		START WITH whose_no IS NULL  -- 부모 게시글이 없는 최상위 게시글부터 시작
+		CONNECT BY PRIOR board_no = whose_no  -- 계층 관계 정의
+		ORDER SIBLINGS BY reg_date DESC       -- 같은 부모 게시글끼리 정렬
 	</select>
 
 	<!-- 게시글 상세 조회 -->
