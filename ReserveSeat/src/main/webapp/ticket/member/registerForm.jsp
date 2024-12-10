@@ -75,6 +75,24 @@ table input[type="text"], table input[type="password"] {
 .button.cancel:hover {
 	background-color: #d11a1a;
 }
+/* 홈으로 링크 버튼 스타일 */
+a.home-link {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 20px;
+    background-color: #ff4d4d; /* 홈 버튼 색상 */
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+a.home-link:hover {
+    background-color: #218838; /* hover 시 색상 변화 */
+    transform: translateY(-2px); /* 살짝 위로 이동 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
 </style>
 </head>
 <body>
@@ -107,7 +125,7 @@ table input[type="text"], table input[type="password"] {
 			</table>
 			<div class="button-group">
 				<button type="submit" class="button">가입하기</button>
-				<a href="/ReserveSeat/login.do" class="button cancel">취소</a>
+	<a href="/ReserveSeat/index.jsp" class="home-link">취소</a>
 			</div>
 		</form>
 	</div>

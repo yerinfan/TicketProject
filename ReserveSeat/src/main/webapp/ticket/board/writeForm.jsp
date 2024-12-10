@@ -9,30 +9,34 @@
 <style>
 /* 전체 페이지 스타일 */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Noto Sans', 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f7fc; /* 부드러운 배경색 */
+    background: linear-gradient(135deg, #eef2f3, #8e9eab); /* 부드러운 그라데이션 배경 */
+    color: #333;
 }
 
 /* 제목 스타일 */
 h2 {
     text-align: center;
-    color: #0044cc;
+    color: #007BFF; /* 포인트 컬러 */
     font-size: 2.5rem;
     margin-top: 40px;
     font-weight: bold;
+    text-transform: uppercase; /* 대문자 */
+    letter-spacing: 1px;
 }
 
 /* 폼 스타일 */
 form {
-    width: 80%;
-    max-width: 800px;
+    width: 90%;
+    max-width: 700px; /* 적절한 최대 너비 */
     margin: 30px auto;
     padding: 30px;
     background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px; /* 부드러운 곡선 */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+    animation: fadeIn 0.6s ease-in-out; /* 부드러운 등장 효과 */
 }
 
 /* 입력 요소 스타일 */
@@ -43,37 +47,99 @@ p {
 
 input[type="text"], textarea {
     width: 100%;
-    padding: 12px;
+    padding: 12px 15px;
     font-size: 1rem;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 8px; /* 부드러운 곡선 */
     margin-top: 8px;
     margin-bottom: 15px;
     box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 포커스 상태에서 효과 */
+input[type="text"]:focus, textarea:focus {
+    border-color: #007BFF;
+    box-shadow: 0 5px 10px rgba(0, 123, 255, 0.2);
+    outline: none;
 }
 
 /* textarea 스타일 */
 textarea {
     resize: vertical;
+    font-family: 'Noto Sans', 'Arial', sans-serif;
+}
+
+/* 테이블 스타일 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #007BFF;
+    color: white;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+td {
+    background-color: #f9f9f9;
 }
 
 /* 버튼 스타일 */
 button {
-    padding: 12px 25px;
+    padding: 14px 20px;
     font-size: 1.2rem;
-    background-color: #87CEEB;
+    background-color: #007BFF;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px; /* 부드러운 곡선 */
     cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    font-weight: bold;
+    width: 100%; /* 버튼 전체 너비 */
     margin-top: 20px;
-    width: 100%;
 }
 
 button:hover {
-    background-color: #00BFFF;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: #0056b3;
+    transform: translateY(-3px); /* 살짝 위로 이동 */
+    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
+}
+
+button:focus {
+    outline: none;
+}
+
+/* 취소 버튼 스타일 */
+a button {
+    background-color: #FF6B6B; /* 빨간색 취소 버튼 */
+}
+
+a button:hover {
+    background-color: #d11a1a; /* hover 시 어두운 빨간색 */
+    box-shadow: 0 8px 20px rgba(209, 26, 26, 0.4); /* 강한 그림자 */
+}
+
+/* 애니메이션 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* 링크 스타일 */
@@ -81,17 +147,18 @@ a {
     display: inline-block;
     margin-top: 20px;
     padding: 10px 20px;
-    background-color: #0044cc;
+    background-color: #007BFF;
     color: white;
     text-decoration: none;
-    font-size: 1.2rem;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    font-size: 1rem;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
 }
 
 a:hover {
-    background-color: #00BFFF;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
 }
 
 </style>

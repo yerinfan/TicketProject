@@ -1,30 +1,31 @@
 /* 전체 페이지 스타일 */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Noto Sans', 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f7fc; /* 배경색 */
+    background-color: #f9fbfd; /* 부드러운 배경색 */
+    color: #333; /* 기본 텍스트 색상 */
 }
 
 /* 헤더 스타일 */
 header {
-    background-color: #0044cc; /* 메인 색상 */
+    background-color: #0056d2; /* 더 깊은 파란색 */
     color: white;
-    padding: 20px 0;
+    padding: 30px 0;
     text-align: center;
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: bold;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* 내비게이션 스타일 */
 nav ul {
     list-style: none;
     padding: 0;
-    margin: 20px 0;
+    margin: 15px 0;
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 15px; /* 버튼 간격 */
 }
 
 nav ul li {
@@ -34,87 +35,127 @@ nav ul li {
 nav ul li a {
     text-decoration: none;
     color: white;
-    font-size: 1.2rem;
-    padding: 10px 20px; /* 크기 통일 */
-    border-radius: 5px;
-    background-color: #87CEEB; /* 하늘색 버튼 */
-    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 1rem;
+    padding: 10px 20px; /* 버튼 크기 조정 */
+    border-radius: 20px; /* 둥근 버튼 */
+    background-color: #007bff; /* 밝은 파란색 */
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 nav ul li a:hover {
-    background-color: #00BFFF; /* hover 시 더 짙은 하늘색 */
-    color: white;
-}
-
-/* 사용자 정보 섹션 */
-.user-info {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 20px;
-    font-size: 1.1rem;
-    color: white;
-}
-
-.user-name {
-    font-weight: bold;
+    background-color: #0056d2; /* hover 시 색 변경 */
+    transform: scale(1.05); /* 버튼 확대 효과 */
 }
 
 /* 로그아웃 버튼 */
 .logout-btn {
-    background-color: #87CEEB; /* 하늘색 버튼 */
+    background-color: #ff6b6b; /* 빨간색 로그아웃 버튼 */
     color: white;
     border: none;
-    padding: 10px 20px; /* 크기 통일 */
-    font-size: 1.2rem; /* 다른 버튼과 동일한 폰트 크기 */
-    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 20px;
     cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .logout-btn:hover {
-    background-color: #00BFFF; /* hover 시 더 짙은 하늘색 */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: #e63946; /* hover 시 더 어두운 빨간색 */
+    transform: scale(1.05);
 }
-
-/* 컨테이너 스타일 */
-.container {
+/* 중앙 정렬 컨테이너 */
+.center-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh; /* 화면 전체 높이 */
-    padding: 20px;
-}
-
-/* 위치 섹션 스타일 */
-#section-3 {
+    align-items: center; /* 가로 중앙 정렬 */
+    justify-content: center; /* 세로 중앙 정렬 */
+    height: auto; /* 고정 높이 제거 */
+    margin: 50px auto; /* 상하 여백 */
     text-align: center;
-    margin-top: 50px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: 100%;
-    max-width: 800px;
+    background: white;
+    padding: 20px 30px; /* 여백 조정 */
+    border-radius: 8px; /* 더 작은 곡선 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px; /* 적절한 너비로 제한 */
 }
 
-#map {
-    width: 100%;
-    height: 500px;
-    margin: 0 auto;
-    border-radius: 10px;
+/* 현재 시간 텍스트 스타일 */
+#countdown {
+    font-size: 1.2rem;
+    margin-bottom: 15px; /* 버튼과의 간격 줄이기 */
+    color: #333;
 }
 
-/* 코드 섹션 스타일 */
-#snippet {
-    display: none;
+/* 버튼 스타일 */
+#reserveSeatBtn {
+    font-size: 1rem;
+    padding: 10px 20px; /* 더 작은 버튼 크기 */
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 20px; /* 둥근 버튼 */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
-button[disabled] {
+#reserveSeatBtn:hover {
+    background-color: #0056d2; /* hover 시 더 어두운 색 */
+    transform: translateY(-2px); /* 버튼 위로 살짝 이동 */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15); /* 더 큰 그림자 */
+}
+
+#reserveSeatBtn:disabled {
     background-color: #ccc;
     color: #666;
     cursor: not-allowed;
-    border: 1px solid #999;
+    box-shadow: none;
 }
+
+
+/* 지도 섹션 */
+#section-3 {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 가로 중앙 정렬 */
+    justify-content: center; /* 세로 중앙 정렬 */
+    margin-top: 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    max-width: 800px; /* 최대 너비 설정 */
+    margin: 30px auto; /* 좌우 중앙 정렬 */
+    text-align: center;
+}
+
+/* 지도 스타일 */
+#map {
+    width: 100%; /* 부모 컨테이너 크기 채우기 */
+    max-width: 700px; /* 적절한 너비 제한 */
+    height: 400px; /* 고정 높이 */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 auto; /* 지도 자체 중앙 정렬 */
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    #reserveSeatBtn {
+        font-size: 1rem;
+        padding: 10px 20px;
+    }
+
+    .center-container {
+        max-width: 90%;
+    }
+
+    nav ul li a {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+}
+

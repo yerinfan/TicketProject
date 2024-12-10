@@ -34,7 +34,7 @@ h2 {
 
 /* 테이블 스타일 */
 table {
-    width: 80%;
+    width: 60%;
     margin: 30px auto;
     border-collapse: collapse;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
