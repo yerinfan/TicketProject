@@ -17,6 +17,7 @@ public class BoardDAO {
 	
 	// 전체게시글 조회
 	public List<BoardVO> selectAll() throws Exception {
+		session.clearCache();
 		return session.selectList("kr.ac.kopo.dao.BoardDAO.selectAll");
 	}
 	

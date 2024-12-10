@@ -19,10 +19,12 @@ public class ClassDAO {
 
 	public List<ClassVO> getClassDetails(Map<String, Object> params) {
 		// MyBatis 쿼리 호출
+		session.clearCache();
 		return session.selectList("class.getClassDetails", params);
 	}
 
 	public List<ClassVO> getClassDetails(String classNo, String regTime) {
+		session.clearCache();
 		Map<String, Object> params = new HashMap<>();
 		params.put("classNo", classNo);
 		params.put("regTime", regTime);
@@ -63,6 +65,7 @@ public class ClassDAO {
 	}
 
 	public ClassVO getSeat(String seatKey, String classNo, String regTime) {
+		session.clearCache();
 		Map<String, Object> params = new HashMap<>();
 		params.put("seatKey", seatKey);
 		params.put("classNo", classNo);
@@ -89,6 +92,7 @@ public class ClassDAO {
 	}
 
 	public List<ClassVO> getReservedSeats(String userId) {
+		session.clearCache();
 		System.out.println("getReservedSeats userId : " + userId);
 	    return session.selectList("class.getReservedSeats", userId);
 	}
