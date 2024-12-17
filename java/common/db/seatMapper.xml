@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="seat">
+
+	<!-- 특정 좌석 정보 가져오기 -->
+	<select id="selectSeat" parameterType="map"
+		resultType="kr.ac.kopo.vo.SeatVO">
+		SELECT seat_key AS sea tKey, is_empty AS isEmpty
+		FROM
+		rs_class
+		WHERE seat_key = #{seatKey}
+		AND class_no = #{classNo}
+		AND
+		reg_time = #{regTime}
+	</select>
+
+	<!-- 좌석 상태 업데이트 -->
+	<update id="updateSeat" parameterType="string">
+		UPDATE rs_class
+		SET
+		is_empty = 'N'
+		WHERE seat_key = #{seatKey} AND is_empty = 'Y'
+	</update>
+
+	<!-- 강의실별 총 좌석 수와 잔여 좌석 수 -->
+	<select id="getSeatSummaries"
+		resultType="kr.ac.kopo.vo.SeatSummaryVO">
+		SELECT
+		c.room_id AS roomId,
+		c.name AS className,
+		c.capacity AS
+		totalSeats,
+		SUM(DECODE(s.status, 'available', 1, 0)) AS remainingSeats
+		FROM rs_classroom c
+		LEFT JOIN rs_seat s ON c.room_id = s.room_id
+		GROUP
+		BY c.room_id, c.name, c.capacity
+		ORDER BY c.room_id
+	</select>
+
+	<select id="getSeatsByRoomId" parameterType="int"
+		resultType="kr.ac.kopo.vo.SeatVO">
+		SELECT
+		seat_id AS seatId,
+		row_number AS rowNumber,
+		column_number AS columnNumber,
+		status AS status,
+		seat_key AS seatKey
+		FROM rs_seat
+		WHERE room_id = #{roomId}
+		ORDER BY row_number,
+		column_number
+	</select>
+
+	<!-- 좌석 상태를 reserved로 업데이트 -->
+	<update id="updateSeatStatusToReserved" parameterType="map">
+		UPDATE
+		rs_seat
+		SET status = 'reserved'
+		WHERE seat_id = #{seatId}
+		AND room_id =
+		#{roomId}
+		AND status = 'available'
+	</update>
+
+	<!-- 좌석 예약 (rs_reservation에 삽입) -->
+	<insert id="reserveSeat" parameterType="map">
+		INSERT INTO
+		rs_reservation (reservation_id, seat_id, user_id,
+		reservation_time,
+		status)
+		VALUES (seq_reservation_id.NEXTVAL, #{seatId}, #{userId},
+		CURRENT_TIMESTAMP,
+		'active')
+	</insert>
+
+	<!-- 동일 강의실 중복 예약 확인 -->
+	<select id="checkDuplicateReservation" parameterType="map"
+		resultType="int">
+		SELECT COUNT(*)
+		FROM rs_reservation r
+		JOIN rs_seat s ON r.seat_id = s.seat_id
+		WHERE r.user_id = #{userId} AND s.room_id = #{roomId} AND r.status =
+		'active'
+	</select>
+
+</mapper>
