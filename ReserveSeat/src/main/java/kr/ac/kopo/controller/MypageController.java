@@ -5,15 +5,15 @@ import java.util.List;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import kr.ac.kopo.dao.ClassDAO;
-import kr.ac.kopo.vo.ClassVO;
+import kr.ac.kopo.service.ReserveService;
 import kr.ac.kopo.vo.MemberVO;
+import kr.ac.kopo.vo.ReservationVO;
 
 public class MypageController implements Controller {
-    private ClassDAO classDAO;
+    private ReserveService reservationService;
 
     public MypageController() {
-        classDAO = new ClassDAO();
+        reservationService = new ReserveService();
     }
 
     @Override
@@ -27,13 +27,14 @@ public class MypageController implements Controller {
             return "/ticket/member/loginForm.jsp"; // 로그인 페이지로 리다이렉트
         }
 
-        String userId = user.getUserId(); // MemberVO에서 userId 추출
+        int userId = user.getUserId(); // MemberVO에서 userId 추출
         System.out.println("현재 로그인된 userId: " + userId);
 
         // 사용자 예약 정보 조회
-        List<ClassVO> reservedSeats = classDAO.getReservedSeats(userId);
-        request.setAttribute("reservedSeats", reservedSeats);
-
+        List<ReservationVO> reservations = reservationService.getReservationsByUserId(userId);
+        request.setAttribute("reservations", reservations);
+        request.setAttribute("userName", user.getName());
+        
         return "/ticket/member/myPage.jsp"; // 마이페이지로 이동
     }
 }

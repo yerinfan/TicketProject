@@ -58,7 +58,7 @@ public class MemberDAO {
 		}
 	}
 
-    public MemberVO findMemberByCredentials(String userId, String password) {
+    public MemberVO findMemberByCredentials(int userId, String password) {
         MemberVO params = new MemberVO();
         params.setUserId(userId);
         params.setPassword(password);
@@ -85,7 +85,7 @@ public class MemberDAO {
 		return session.selectOne("member.findByEmail", email);
 	}
 
-    public int updateMemberEmail(String userId, String email) {
+    public int updateMemberEmail(int userId, String email) {
         MemberVO params = new MemberVO();
         params.setUserId(userId);
         params.setEmail(email);

@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import kr.ac.kopo.mybatis.MyConfig;
 import kr.ac.kopo.vo.ClassVO;
+import kr.ac.kopo.vo.SeatVO;
 
 public class ClassDAO {
 
@@ -17,27 +18,26 @@ public class ClassDAO {
 		session = new MyConfig().getInstance();
 	}
 
-	public List<ClassVO> getClassDetails(Map<String, Object> params) {
+	public List<ClassVO> getClassDetails(Map<Integer, Object> params) {
 		// MyBatis 쿼리 호출
 		session.clearCache();
 		return session.selectList("class.getClassDetails", params);
 	}
 
-	public List<ClassVO> getClassDetails(String classNo, String regTime) {
+	public List<SeatVO> getClassDetails(int classNo) {
 		session.clearCache();
 		Map<String, Object> params = new HashMap<>();
 		params.put("classNo", classNo);
-		params.put("regTime", regTime);
 
-//	    System.out.println("Fetc	hing data with params: " + params);
+//	    System.out.println("Fetching data with params: " + params);
 
-		List<ClassVO> result = session.selectList("class.getClassDetails", params);
+		List<SeatVO> result = session.selectList("class.getClassDetails", params);
 //	    System.out.println(result);
 
 		if (result == null || result.isEmpty()) {
 			System.out.println("좌석 데이터가 존재하지 않습니다.");
 		} else {
-			for (ClassVO seat : result) {
+			for (SeatVO seat : result) {
 //	            System.out.println("Fetched Seat Data: " + seat);
 			}
 		}
@@ -64,22 +64,20 @@ public class ClassDAO {
 		return seatMap;
 	}
 
-	public ClassVO getSeat(String seatKey, String classNo, String regTime) {
+	public List<SeatVO> getSeat(String seatKey, int classNo) {
 		session.clearCache();
 		Map<String, Object> params = new HashMap<>();
 		params.put("seatKey", seatKey);
 		params.put("classNo", classNo);
-		params.put("regTime", regTime);
 		System.out.println(params);
 
 		return session.selectOne("class.selectSeat", params);
 	}
 
-	public boolean reserveSeat(String seatKey, String classNo, String regTime, String userId) {
+	public boolean reserveSeat(String seatKey, String classNo, String userId) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("seatKey", seatKey);
 		params.put("classNo", classNo);
-		params.put("regTime", regTime);
 	    params.put("reservedBy", userId); // 사용자 ID 추가
 
 		System.out.println(params);

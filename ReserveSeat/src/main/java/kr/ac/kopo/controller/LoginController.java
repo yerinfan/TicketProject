@@ -18,9 +18,17 @@ public class LoginController implements Controller {
     
     @Override
     public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String userId = request.getParameter("userId");
+    	String userIdParam = request.getParameter("userId");
         String password = request.getParameter("password");
 
+     // 유효성 검사
+        if (userIdParam == null || userIdParam.isEmpty() || password == null || password.isEmpty()) {
+            request.setAttribute("errorMsg", "아이디와 비밀번호를 입력해주세요.");
+            return "/ticket/member/loginForm.jsp"; // 에러 페이지로 포워딩
+        }
+        
+        int userId;
+        userId = Integer.parseInt(userIdParam);
         MemberVO user = memberService.validateUser(userId, password);
 
         if (user != null) {

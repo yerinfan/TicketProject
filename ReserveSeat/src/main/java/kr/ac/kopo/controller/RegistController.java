@@ -32,9 +32,9 @@ public class RegistController implements Controller {
 	        }
 //	        System.out.println("2");
 	        // 파라미터 변환 및 VO 객체 생성
-	        String userId;
+	        int userId;
 	        try {
-	            userId = userIdParam;
+	            userId = Integer.parseInt(userIdParam);
 	        } catch (NumberFormatException e) {
 	            request.setAttribute("message", "유효하지 않은 사용자 ID입니다.");
 	            return "/ticket/member/regist.jsp";

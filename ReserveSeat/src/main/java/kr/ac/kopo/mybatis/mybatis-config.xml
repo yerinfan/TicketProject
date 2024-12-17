@@ -29,5 +29,6 @@
 		<mapper resource="common/db/boardMapper.xml" />
 		<mapper resource="common/db/classMapper.xml" />
 		<mapper resource="common/db/seatMapper.xml" />
+		<mapper resource="common/db/reserveMapper.xml" />
 	</mappers>
 </configuration>

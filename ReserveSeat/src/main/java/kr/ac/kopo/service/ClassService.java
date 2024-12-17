@@ -3,7 +3,7 @@ package kr.ac.kopo.service;
 import java.util.List;
 
 import kr.ac.kopo.dao.ClassDAO;
-import kr.ac.kopo.vo.ClassVO;
+import kr.ac.kopo.vo.SeatVO;
 
 public class ClassService {
 
@@ -13,7 +13,7 @@ public class ClassService {
         classDAO = new ClassDAO();
     }
 
-    public List<ClassVO> getSeatInfo(String classNo, String regTime) {
-        return classDAO.getSeatInfo(classNo, regTime);
+    public List<SeatVO> getSeat(String seatKey, int classNo) {
+        return classDAO.getSeat(seatKey, classNo);
     }
 }

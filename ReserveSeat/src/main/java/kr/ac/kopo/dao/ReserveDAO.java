@@ -3,12 +3,14 @@ package kr.ac.kopo.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
 import kr.ac.kopo.mybatis.ConnectionFactory;
 import kr.ac.kopo.mybatis.MyConfig;
+import kr.ac.kopo.vo.ReservationVO;
 
 public class ReserveDAO {
 
@@ -16,6 +18,11 @@ public class ReserveDAO {
 
 	public ReserveDAO() {
 		session = new MyConfig().getInstance();
+	}
+
+	public List<ReservationVO> getReservationsByUserId(int userId) {
+		session.clearCache();
+		return session.selectList("reserve.getReservationsByUserId", userId);
 	}
 
 	// 좌석 예약 가능 여부 확인

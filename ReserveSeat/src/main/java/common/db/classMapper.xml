@@ -3,57 +3,82 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="class">
-	<select id="getClassDetails" parameterType="map"
-		resultType="kr.ac.kopo.vo.ClassVO">
-		SELECT
-		seat_no AS seatNo,
-		class_no AS classNo,
-		reg_time AS
-		regTime,
-		seat_row AS seatRow,
-		seat_col AS seatCol,
-		seat_key AS seatKey,
-		is_empty AS isEmpty,
-		class_type AS classType
-		FROM rs_class
-		WHERE class_no = #{classNo, jdbcType=VARCHAR}
-		AND reg_time = #{regTime, jdbcType=VARCHAR}
-	</select>
 
-	<update id="reserveSeat" parameterType="map">
-		UPDATE rs_class
-		SET is_empty = 'N',
-		reserved_by = #{reservedBy}
-		WHERE seat_key = #{seatKey} AND is_empty = 'Y' AND
-		class_no = #{classNo}
-		AND reg_time = #{regTime}
-	</update>
-
-	<!-- 특정 좌석 정보 가져오기 -->
-	<select id="selectSeat" parameterType="map"
-		resultType="kr.ac.kopo.vo.ClassVO">
-		SELECT seat_no AS seatNo, class_no AS classNo, reg_time AS regTime,
-		seat_row AS seatRow, seat_col AS seatCol, seat_key AS seatKey,
-		is_empty AS isEmpty, class_type AS classType
-		FROM rs_class
-		WHERE seat_key = #{seatKey, jdbcType=VARCHAR}
-		AND class_no = #{classNo, jdbcType=VARCHAR}
-		AND reg_time = #{regTime, jdbcType=VARCHAR}
-	</select>
-	
-	 <select id="getReservedSeats" parameterType="string" resultType="kr.ac.kopo.vo.ClassVO">
-        SELECT 
-            seat_no AS seatNo,
-            class_no AS classNo,
-            reg_time AS regTime,
-            seat_row AS seatRow,
-            seat_col AS seatCol,
-            is_empty AS isEmpty,
-            class_type AS classType,
-            reserved_by AS reservedBy 
-        FROM rs_class
-        WHERE reserved_by = #{userId, jdbcType=VARCHAR}
+    <!-- 특정 강의실 상세 정보 가져오기 -->
+    <select id="getClassDetails" parameterType="map" resultType="kr.ac.kopo.vo.SeatVO">
+        SELECT
+            s.seat_id AS seatId,
+            s.room_id AS roomId,
+            s.row_number AS rowNumber,
+            s.column_number AS columnNumber,
+            s.status AS status,
+            s.seat_key AS seatKey,
+            c.name AS className,
+            c.capacity AS capacity,
+            c.location AS location
+        FROM rs_seat s
+        JOIN rs_classroom c ON s.room_id = c.room_id
+        WHERE s.room_id = #{roomId}
+        ORDER BY s.row_number, s.column_number
     </select>
+
+    <!-- 좌석 예약 -->
+    <update id="reserveSeat" parameterType="map">
+        UPDATE rs_seat
+        SET status = 'reserved'
+        WHERE seat_key = #{seatKey, jdbcType=VARCHAR}
+        AND room_id = #{roomId}
+        AND status = 'available'
+    </update>
+
+    <!-- 특정 좌석 정보 가져오기 -->
+    <select id="selectSeat" parameterType="map" resultType="kr.ac.kopo.vo.SeatVO">
+        SELECT
+            seat_id AS seatId,
+            room_id AS roomId,
+            row_number AS rowNumber,
+            column_number AS columnNumber,
+            status AS status,
+            seat_key AS seatKey
+        FROM rs_seat
+        WHERE seat_key = #{seatKey, jdbcType=VARCHAR}
+        AND room_id = #{roomId}
+    </select>
+
+    <!-- 특정 사용자가 예약한 좌석 목록 가져오기 -->
+    <select id="getReservedSeats" parameterType="map" resultType="kr.ac.kopo.vo.ReservationVO">
+        SELECT 
+            r.reservation_id AS reservationId,
+            r.seat_id AS seatId,
+            r.user_id AS userId,
+            r.reservation_time AS reservationTime,
+            r.status AS status,
+            s.row_number AS rowNumber,
+            s.column_number AS columnNumber,
+            s.seat_key AS seatKey,
+            s.room_id AS roomId
+        FROM rs_reservation r
+        JOIN rs_seat s ON r.seat_id = s.seat_id
+        WHERE r.user_id = #{userId}
+        ORDER BY r.reservation_time
+    </select>
+
+    <!-- 예약 정보 삽입 -->
+    <insert id="insertReservation" parameterType="map" useGeneratedKeys="true" keyProperty="reservationId">
+        INSERT INTO rs_reservation (reservation_id, seat_id, user_id, reservation_time, status)
+        VALUES (
+            #{reservationId},
+            #{seatId},
+            #{userId},
+            CURRENT_TIMESTAMP,
+            #{status, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!-- 예약 취소 -->
+    <update id="cancelReservation" parameterType="map">
+        UPDATE rs_reservation
+        SET status = 'cancelled'
+        WHERE reservation_id = #{reservationId}
+    </update>
 </mapper>
-
-

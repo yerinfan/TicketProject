@@ -18,7 +18,7 @@ public class MemberService {
 	 * @param password
 	 * @return boolean
 	 */
-	public MemberVO validateUser(String userId, String password) {
+	public MemberVO validateUser(int userId, String password) {
 		return memberDAO.findMemberByCredentials(userId, password); // 사용자 정보를 반환
 	}
 
@@ -42,7 +42,7 @@ public class MemberService {
         return memberDAO.findByEmail(email) != null;
     }
     
-    public boolean linkAccount(String userId, String password, String email) {
+    public boolean linkAccount(int userId, String password, String email) {
         MemberVO existingMember = memberDAO.findMemberByCredentials(userId, password);
         if (existingMember != null) {
             return memberDAO.updateMemberEmail(userId, email) > 0;

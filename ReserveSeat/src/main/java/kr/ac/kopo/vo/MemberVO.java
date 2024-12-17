@@ -1,7 +1,7 @@
 package kr.ac.kopo.vo;
 
 public class MemberVO {
-	private String userId;
+	private int userId;
 	private String name;
 	private String password;
 	private String nickname;
@@ -12,7 +12,7 @@ public class MemberVO {
 		super();
 	}
 
-	public MemberVO(String userId, String name, String email) {
+	public MemberVO(int userId, String name, String email) {
 		super();
 		this.userId = userId;
 		this.name = name;
@@ -26,7 +26,7 @@ public class MemberVO {
 	}
 	
 
-	public MemberVO(String userID, String name, String password, String email ,String nickname) {
+	public MemberVO(int userID, String name, String password, String email ,String nickname) {
 		super();
 		this.userId = userID;
 		this.name = name;
@@ -35,7 +35,7 @@ public class MemberVO {
 		this.nickname = nickname;
 	}
 	
-	public MemberVO(String userID, String name, String password, String nickname) {
+	public MemberVO(int userID, String name, String password, String nickname) {
 		super();
 		this.userId = userID;
 		this.name = name;
@@ -44,7 +44,7 @@ public class MemberVO {
 		this.regDate = regDate;
 	}
 
-	public MemberVO(String userId, String name, String password, String nickname, String regDate, String email) {
+	public MemberVO(int userId, String name, String password, String nickname, String regDate, String email) {
 		super();
 		this.userId = userId;
 		this.name = name;
@@ -55,11 +55,11 @@ public class MemberVO {
 	}
 
 	
-	public String getUserId() {
+	public int getUserId() {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(int userId) {
 		this.userId = userId;
 	}
 
@@ -71,13 +71,6 @@ public class MemberVO {
 		this.email = email;
 	}
 
-	public String getUserID() {
-		return userId;
-	}
-
-	public void setUserID(String userID) {
-		this.userId = userID;
-	}
 
 	public String getName() {
 		return name;
