@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page session="true"%>
 <%
-String loggedInUserId = null;
+int loggedInUserId;
 if (session.getAttribute("user") != null) {
 	loggedInUserId = ((kr.ac.kopo.vo.MemberVO) session.getAttribute("user")).getUserId();
 }

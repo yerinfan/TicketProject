@@ -1,10 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-<title>내 예약 좌석 정보</title>
 <style>
 /* 전체 페이지 스타일 */
 body {
@@ -90,36 +86,15 @@ a:hover {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 </style>
-</head>
 <head>
-    <title>나의 예약 목록</title>
+    <title>선점 성공</title>
 </head>
 <body>
-    <h1>${userName}님의 예약 목록</h1>
-
-    <c:if test="${not empty reservations}">
-        <table border="1">
-            <tr>
-                <th>예약 번호</th>
-                <th>강의실</th>
-                <th>좌석 위치</th>
-                <th>예약 시간</th>
-            </tr>
-            <c:forEach var="reservation" items="${reservations}">
-                <tr>
-                    <td>${reservation.reservationId}</td>
-                    <td>${reservation.className}</td>
-                    <td>${reservation.rowNumber}행 ${reservation.columnNumber}열</td>
-                    <td>${reservation.reservationTime}</td>
-                </tr>
-            </c:forEach>
-        </table>
-    </c:if>
-
-    <c:if test="${empty reservations}">
-        <p>예약된 좌석이 없습니다.</p>
-    </c:if>
-
-    <a href="/ReserveSeat/index.jsp">홈으로</a>
+    <h1>좌석 선점 완료</h1>
+    <p>강의실 ID: ${roomId}</p>
+    <p>좌석 ID: ${seatId}</p>
+    <p>예약자: ${userName}</p>
+    <p>선점이 완료되었습니다. 즐거운 하루 되세요!</p>
+   <a href="/ReserveSeat/index.jsp" class="home-link">홈으로</a>
 </body>
 </html>

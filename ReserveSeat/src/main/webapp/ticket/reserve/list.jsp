@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -111,27 +112,37 @@ a:hover {
 </style>
 <body>
     <h2>자리 선점하기</h2>
-    <form action="/ReserveSeat/reserve/detail.do" method="get">
-    <label>시간 선택:</label>
-    <div class="radio-group">
-        <label>
-            <input type="radio" name="regTime" value="AM" required> 오전
-        </label>
-        <label>
-            <input type="radio" name="regTime" value="PM"> 오후
-        </label>
-    </div>
-    <br><br>
-            강의실 선택:
-            <select name="classNo" required>
-                <option value="A">프로그래밍 실습실</option>
-                <option value="B">ai iot 실습실</option>
-                <option value="C">ai 제어 실습실</option>
-            </select>
-        </label>
-        <br><br>
-        <button type="submit">좌석 확인</button>
-    </form>
+
+    <!-- 에러 메시지 출력 -->
+    <c:if test="${not empty errorMessage}">
+        <div style="color: red;">
+            <strong>Error:</strong> ${errorMessage}
+        </div>
+    </c:if>
+
+    <!-- 강의실 선택 폼 -->
+    <c:if test="${empty errorMessage}">
+        <form action="/ReserveSeat/reserve/detail.do" method="get">
+            <label for="roomId">강의실 선택:</label>
+            <select name="roomId" id="roomId" required>
+                <c:if test="${not empty seatSummaries}">
+                    <c:forEach var="summary" items="${seatSummaries}">
+                        <option value="${summary.roomId}">
+                            ${summary.className} (잔여 좌석: ${summary.remainingSeats != null ? summary.remainingSeats : 0}/${summary.totalSeats != null ? summary.totalSeats : 0})
+                        </option>
+                    </c:forEach>
+                </c:if>
+                <c:if test="${empty seatSummaries}">
+                    <option value="">강의실 데이터가 없습니다</option>
+                </c:if>
+            </select>		
+            <br><br>
+            <button type="submit">좌석 확인</button>
+        </form>
+    </c:if>
+
+    <!-- 홈으로 이동 -->
     <a href="/ReserveSeat/index.jsp">홈으로</a>
 </body>
+
 </html>
