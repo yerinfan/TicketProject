@@ -92,23 +92,25 @@ input[type="radio"] {
     gap: 20px; /* 라디오 버튼들 사이 간격 */
     margin-bottom: 20px;
 }
-/* 링크(홈으로) 스타일 */
-a {
-    text-decoration: none;
+/* 홈으로 링크 버튼 스타일 */
+a.home-link {
     display: inline-block;
-    margin-top: 20px;
+    margin-top: 30px;
     padding: 12px 20px;
-    background-color: #0044cc;
+    background-color: #28a745; /* 홈 버튼 색상 */
     color: white;
-    font-size: 1.2rem;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-a:hover {
-    background-color: #00BFFF;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+a.home-link:hover {
+    background-color: #218838; /* hover 시 색상 변화 */
+    transform: translateY(-2px); /* 살짝 위로 이동 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
+
 </style>
 <body>
     <h2>자리 선점하기</h2>
@@ -142,7 +144,7 @@ a:hover {
     </c:if>
 
     <!-- 홈으로 이동 -->
-    <a href="/ReserveSeat/index.jsp">홈으로</a>
+<a href="/ReserveSeat/index.jsp" class="home-link">홈으로</a>
 </body>
 
 </html>

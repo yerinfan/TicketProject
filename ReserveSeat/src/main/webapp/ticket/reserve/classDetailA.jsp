@@ -94,23 +94,23 @@ td {
 	display: inline-block;
 	margin: 5px;
 }
-
-/* 링크(홈으로) 스타일 */
-a {
-    text-decoration: none;
+/* 홈으로 링크 버튼 스타일 */
+a.home-link {
     display: inline-block;
-    margin-top: 20px;
+    margin-top: 30px;
     padding: 12px 20px;
-    background-color: #0044cc;
+    background-color: #28a745; /* 홈 버튼 색상 */
     color: white;
-    font-size: 1.2rem;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-a:hover {
-    background-color: #00BFFF;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+a.home-link:hover {
+    background-color: #218838; /* hover 시 색상 변화 */
+    transform: translateY(-2px); /* 살짝 위로 이동 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 </style>
 <script>
@@ -127,7 +127,7 @@ a:hover {
 </head>
 <body>
 
-	<h1>프로그래밍 실습실 좌석 상세 정보</h1>
+	<h1>강의실 ${roomId} 좌석 상세 정보</h1>
 
 	<c:if test="${not empty errorMessage}">
 		<div style="color: red;">
@@ -139,10 +139,10 @@ a:hover {
 		<div>
 			<c:forEach var="seat" items="${seatList}">
 				<div class="seat ${seat.status}">
-					좌석 ID: ${seat.seatId} <br> 위치: ${seat.rowNumber}행,
-					${seat.columnNumber}열 <br>
+					좌석 ID: ${seat.seatId} <br> 위치	: ${seat.rowNumber}행,
+					${seat.columnNumber}열 <br> 
 					<c:if test="${seat.status == 'available'}">
-					상태: 예약 가능 <br>
+					상태: 선점 가능 <br>
 						<form action="/ReserveSeat/reserve/confirm.do" method="post"
 							style="display: inline;">
 							<input type="hidden" name="seatId" value="${seat.seatId}">
@@ -156,6 +156,6 @@ a:hover {
 		</div>
 	</c:if>
 
-	<a href="/ReserveSeat/index.jsp" class="home-link">홈으로</a>
+<a href="/ReserveSeat/index.jsp" class="home-link">홈으로</a>
 </body>
 </html>

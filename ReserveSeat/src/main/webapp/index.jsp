@@ -13,7 +13,7 @@ int minute = now.get(Calendar.MINUTE);
 
 boolean isDisabled = false;
 
-if ((dayOfWeek == Calendar.WEDNESDAY && hour >= 2) && (dayOfWeek == Calendar.WEDNESDAY && hour < 3)) {
+if ((dayOfWeek == Calendar.FRIDAY && hour >= 12) && (dayOfWeek == Calendar.SATURDAY && hour < 2)) {
 	isDisabled = true;
 }
 

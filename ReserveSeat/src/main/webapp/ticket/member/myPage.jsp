@@ -99,21 +99,34 @@ a:hover {
 
     <c:if test="${not empty reservations}">
         <table border="1">
-            <tr>
-                <th>예약 번호</th>
-                <th>강의실</th>
-                <th>좌석 위치</th>
-                <th>예약 시간</th>
-            </tr>
-            <c:forEach var="reservation" items="${reservations}">
-                <tr>
-                    <td>${reservation.reservationId}</td>
-                    <td>${reservation.className}</td>
-                    <td>${reservation.rowNumber}행 ${reservation.columnNumber}열</td>
-                    <td>${reservation.reservationTime}</td>
-                </tr>
-            </c:forEach>
-        </table>
+    <tr>
+        <th>예약 번호</th>
+        <th>강의실</th>
+        <th>좌석 위치</th>
+        <th>상태</th>
+        <th>예약 시간</th>
+        <th>취소</th>
+    </tr>
+    <c:forEach var="reservation" items="${reservations}">
+        <tr>
+            <td>${reservation.reservationId}</td>
+            <td>${reservation.roomId}</td>
+            <td>${reservation.rowNumber}행 ${reservation.columnNumber}열</td>
+            <td>${reservation.reservationTime}</td>
+            <td>
+                <c:if test="${reservation.status == 'active'}">
+                    <form action="/mypage/cancelReservation.do" method="post">
+                        <input type="hidden" name="reservationId" value="${reservation.reservationId}">
+                        <button type="submit">취소</button>
+                    </form>
+                </c:if>
+                <c:if test="${reservation.status != 'active'}">
+                    취소됨
+                </c:if>
+            </td>
+        </tr>
+    </c:forEach>
+</table>
     </c:if>
 
     <c:if test="${empty reservations}">
