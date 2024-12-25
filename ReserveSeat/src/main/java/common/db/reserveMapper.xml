@@ -40,11 +40,11 @@
         )
     </insert>
 
-    <!-- 예약 취소 -->
-    <update id="cancelReserve" parameterType="map">
+       <!-- 예약 취소 -->
+    <update id="cancelReservation" parameterType="map">
         UPDATE rs_reservation
         SET status = 'cancelled'
-        WHERE reservation_id = #{reservationId}
+        WHERE reservation_id = #{reservationId} AND user_id = #{userId};
     </update>
 
     <!-- 특정 사용자 예약 조회 -->

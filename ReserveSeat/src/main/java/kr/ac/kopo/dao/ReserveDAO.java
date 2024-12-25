@@ -72,4 +72,11 @@ public class ReserveDAO {
 			e.printStackTrace();
 		}
 	}
+
+	public boolean cancelReservation(int reservationId, int userId) {
+		int rowsUpdated = session.update("reservation.cancelReservation", Map.of("reservationId", reservationId, "userId", userId));
+		session.commit();
+		return rowsUpdated > 0;
+	}
+
 }

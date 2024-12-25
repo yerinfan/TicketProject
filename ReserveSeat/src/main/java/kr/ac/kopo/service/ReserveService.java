@@ -20,4 +20,9 @@ public class ReserveService {
     public List<ReservationVO> getReservationsByUserId(int userId) {
         return reserveDAO.getReservationsByUserId(userId);
     }
+    
+    public boolean cancelReservation(int reservationId, int userId) {
+        return reserveDAO.cancelReservation(reservationId, userId);
+    }
+
 }
